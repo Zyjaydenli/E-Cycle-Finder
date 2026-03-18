@@ -10,23 +10,30 @@ import SwiftData
 
 @main
 struct E_Cycle_FinderApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+    let container: ModelContainer
 
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    init() {
+        self.container = try! ModelContainer(for: Location.self)
+        preloadIfNeeded(context: container.mainContext)
+    }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .task {
+                    guard !isPreview else { return }
+                    await LocationSeeder.refreshFromRemote(context: container.mainContext)
+                }
         }
-        .modelContainer(sharedModelContainer)
+        .modelContainer(container)
     }
+
+    private func preloadIfNeeded(context: ModelContext) {
+        LocationSeeder.ensureSeeded(context: context)
+    }
+
+    private let isPreview: Bool = {
+        let env = ProcessInfo.processInfo.environment
+        return env["XCODE_RUNNING_FOR_PREVIEWS"] == "1" || env["XCODE_RUNNING_FOR_PLAYGROUNDS"] == "1"
+    }()
 }
