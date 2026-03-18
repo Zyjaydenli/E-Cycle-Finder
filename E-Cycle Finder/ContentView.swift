@@ -39,7 +39,7 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 12) {
                     Image(systemName: "leaf.arrow.circlepath")
-                        .font(.system(size: 34, weight: .bold))
+                        .font(.system(size: 40, weight: .bold))
                         .foregroundStyle(.white)
                     Text("E-Cycle Finder")
                         .font(.system(.title, design: .rounded).weight(.bold))
