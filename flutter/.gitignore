@@ -1,0 +1,29 @@
+# Flutter/Dart build outputs
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+
+# Android
+android/.gradle/
+android/local.properties
+android/key.properties
+**/android/app/google-services.json
+
+# iOS/macOS
+ios/Pods/
+ios/.symlinks/
+macos/Pods/
+*.xcworkspace
+!default.xcworkspace
+
+# VSCode local user settings
+.vscode/*.log
+
+# Misc
+*.iml
+*.log
+.DS_Store
+.env
+pubspec.lock

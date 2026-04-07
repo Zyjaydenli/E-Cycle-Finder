@@ -157,9 +157,6 @@ struct BatteryMapView: View {
                     }
                 }
             }
-            .onAppear { updateRegionToFitLocations() }
-            .task { updateRegionToFitLocations() }
-            .onChange(of: locations.count) { _ in updateRegionToFitLocations() }
             .frame(height: UI.mapHeight)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
@@ -172,7 +169,7 @@ struct BatteryMapView: View {
         VStack(alignment: .leading, spacing: 14) {
             Text("Nearby Recycling Centers")
                 .font(.headline)
-            
+
             if nearbyDisplay.isEmpty {
                 Text("No locations found.")
                     .foregroundStyle(.secondary)
@@ -213,4 +210,3 @@ private extension BatteryMapView {
         return String(format: "%.1f km", distanceKm)
     }
 }
-
